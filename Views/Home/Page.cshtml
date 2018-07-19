@@ -1,0 +1,18 @@
+﻿@model Tuple<string, string, string>
+@{
+    ViewData["Title"] = "Page";
+}
+
+<script>
+    var cat1='@(Model.Item1)';
+    var cat2='@(Model.Item2)';
+    var cat3='@(Model.Item3)';
+</script>
+<script src="~/AngularJS/Controllers/pageController.js"></script>
+<div ng-controller="Page_Controller">
+    <h2>Page</h2>
+    <p>{{Categories.cat1}}, {{Categories.cat2}}, {{Categories.cat3}}</p>
+</div>
+
+
+

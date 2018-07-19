@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Stresses";
+}
+<script src="~/AngularJS/Controllers/Stress_Controller.js"></script>
+
+<div ng-controller="Stress_Controller">
+    <h2>Stresses</h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <form name="sf">        @*StressForm*@
+                <label>Stress Type</label>
+                <select name="stress_type" class="form-control" ng-model="StressOBJ.stress_type">
+                    <option value="Non-Emergency">Non-Emergency</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+
+
+                <label>Stress Name</label>
+                <input type="text" name="stress_Name" ng-model="StressOBJ.stress_Name" class="form-control" required pattern="[a-zA-Z ]{3,40}"/> 
+                <div class="alert alert-danger" ng-if="sf.stress_Name.$invalid&&sf.stress_Name.$dirty">
+                    <span ng-if="sf.stress_Name.$error.required">Stressname is Required!</span>
+                    <span ng-if="sf.stress_Name.$error.pattern">Stressname should be alphabetic and 3 to 40</span>
+                    
+                </div>
+                <button class="btn btn-primary btn-block" style="margin-top:4px" ng-disabled="sf.$invalid" ng-click="Save()">
+                    <span ng-if="StressOBJ.stress_id==0">
+                        Insert
+                    </span>
+                    <span ng-if="StressOBJ.stress_id>0">
+                        Update
+                    </span>
+                </button>
+                <button class="btn btn-warning btn-block" style="margin-top:4px" ng-click="Clear()">Clear</button>
+            </form>
+
+        </div>
+        <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Stress Id</th>
+                    <th>Stress Type</th>
+                    <th>Stress Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>               
+                <tr ng-repeat="item in StressList">
+                    <td>{{item.stress_id}}</td>
+                    <td>{{item.stress_type}}</td>
+                    <td>{{item.stress_Name}}</td>
+                    <td>
+                        <button class="btn btn-info" ng-click="LoadData(item)">Edit</button>
+                        <button class="btn btn-danger" ng-click="Delete(item.stress_id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Map";
+}
+
+<h2>Map</h2>
+<script src="~/AngularJS/Services/MapService.js"></script>
+<script src="~/AngularJS/Controllers/mapController.js"></script>
+<div ng-app="OHCMSAP_APP" ng-controller="mapCtrl as vm">
+    <input type="text" name="search" ng-model="search" />
+    <button ng-click="SearchAddress(search)">Search</button>
+    <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{ vm.googleMapsUrl }}">
+        <ng-map id="map" center="{{currentPin}}" on-click="vm.click(event)" zoom="13">
+            <custom-marker position="current-position" 
+                           icon='if_ic_my_location_48px_352557.png'>
+                <div>
+                    <img src="~/images/if_ic_my_location_48px_352557.png" title="Current Location"/>
+                </div>
+                
+               
+            </custom-marker>
+
+            <custom-marker ng-repeat="cm in customMarkers" position="{{cm.lat}},{{cm.lng}}">
+                <div>
+                    <img src="~/images/if_15_Place_Optimization_1688864.png" ng-if="minDuration.status==2" title="Not Available!" />
+                    <img src="~/images/if_15_Place_Optimization_1688864.png" ng-if="minDuration.status==1" title="{{minDuration.d}}" />
+                    <img src="~/images/if_15_Place_Optimization_1688864.png" ng-if="minDuration.status==0" title="Loading..." />
+                </div>
+            </custom-marker>
+            <custom-marker id="usa" ng-repeat="loc in locations" position="{{loc.lat}},{{loc.lng}}">
+                <div>
+                    <img src="~/images/if_7_hospital_2774753.png" ng-click="changestatus(loc)" title="{{loc.address}} {{loc.dd.duration.text}} {{loc.dd.distance.text}}" />
+                </div>
+            </custom-marker>
+
+        </ng-map>
+    </div>
+
+</div>
